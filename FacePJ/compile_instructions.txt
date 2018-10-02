@@ -1,0 +1,7 @@
+First install python 3.6.5 then use pip install in the terminal to install the following:
+- pip install numpy
+- pip install pillow
+- pip install opencv-contrib-python
+Then compile Face.py with python command on the terminal
+*When the program ask your name, if you're on Window Powershell, you should be fine.
+but for others terminal like one on Unbuntu, don't forget the double quote
