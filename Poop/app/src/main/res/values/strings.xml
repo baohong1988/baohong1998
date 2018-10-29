@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Poop</string>
+    <string name="welcome_to_poop">Welcome to POOP</string>
+    <string name="todo">TODO</string>
+    <string name="food_truck">Food Truck</string>
+    <string name="vendors">VENDORS</string>
+    <string name="login_as">Login as:</string>
+    <string name="new_to_poop">New to POOP?</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="create_your_account">Tell us your name</string>
+    <string name="first">First Name</string>
+    <string name="last">Last Name</string>
+</resources>
