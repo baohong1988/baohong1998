@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".Create2">
+    tools:context=".Create3">
 
     <TextView
         android:id="@+id/textView6"
@@ -18,9 +18,9 @@
         android:textAlignment="textStart"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/city"
+        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/street" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <TextView
         android:id="@+id/textView2"
@@ -48,31 +48,58 @@
         android:textAlignment="textStart"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/street"
+        app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <EditText
-        android:id="@+id/city"
+    <!--<EditText-->
+        <!--android:id="@+id/password"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:autofillHints=""-->
+        <!--android:backgroundTint="#ffffff"-->
+        <!--android:fontFamily="@font/asap_bold"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:labelFor="@id/password"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="1.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView6"-->
+        <!--tools:targetApi="o" />-->
+
+    <!--android:drawableStart="@drawable/ic_action_pass"-->
+    <!--android:drawableLeft="@drawable/ic_action_pass"-->
+    <!--android:hint="Password"-->
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:autofillHints=""
-        android:backgroundTint="#ffffff"
-        android:fontFamily="@font/asap_bold"
-        android:textColor="#ffffff"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:labelFor="@id/city"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        tools:targetApi="o" />
+        app:passwordToggleDrawable="@drawable/ic_password_visibility"
+        app:passwordToggleEnabled="true">
 
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/password1"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:fontFamily="@font/asap_bold"
+            android:textColor="#ffffff"
+            android:backgroundTint="#ffffff"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
     <EditText
-        android:id="@+id/street"
+        android:id="@+id/username"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -84,12 +111,52 @@
         android:backgroundTint="#ffffff"
         android:ems="10"
         android:inputType="text"
-        android:labelFor="@id/street"
+        android:labelFor="@id/username"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:targetApi="o" />
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/next"
+        android:fontFamily="@font/asap_bold"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView9"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="38dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:fontFamily="@font/asap_bold"-->
+        <!--android:text="@string/confirmP"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="18sp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/password" />-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/confirm"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:backgroundTint="#ffffff"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:labelFor="@id/confirm"-->
+        <!--android:autofillHints=""-->
+        <!--tools:targetApi="o"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView9" />-->
 
 </android.support.constraint.ConstraintLayout>
