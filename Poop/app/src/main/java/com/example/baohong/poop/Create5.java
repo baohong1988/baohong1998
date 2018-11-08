@@ -22,6 +22,7 @@ public class Create5 extends CreateActivity {
         password = findViewById(R.id.password1);
         username.addTextChangedListener(emptyCheck);
         password.addTextChangedListener(emptyCheck);
+        username.requestFocus();
 
     }
     @Override
@@ -64,6 +65,10 @@ public class Create5 extends CreateActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             gUsername = username.getText().toString();
             gPassword = password.getText().toString();
+            if(TextUtils.isEmpty(gUsername))
+            {
+
+            }
             if(!checkValid(gPassword))
             {
                 password.setError("Not Valid");
