@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".Create3">
+    tools:context=".CreateContactInfo">
 
     <TextView
         android:id="@+id/textView2"
@@ -23,11 +23,12 @@
     <ToggleButton
         android:id="@+id/vendor"
         android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/btn_toggle_sel"
+        android:textColor="@color/white"
         android:textOff="@string/vendors"
         android:textOn="@string/vendors"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,11 +38,12 @@
     <ToggleButton
         android:id="@+id/ft"
         android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/btn_toggle_sel"
+        android:textColor="@color/white"
         android:textOff="@string/food_truck"
         android:textOn="@string/food_truck"
         app:layout_constraintEnd_toEndOf="parent"

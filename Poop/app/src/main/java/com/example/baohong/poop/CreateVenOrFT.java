@@ -2,20 +2,18 @@ package com.example.baohong.poop;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.ToggleButton;
 
-public class Create1 extends CreateActivity {
+public class CreateVenOrFT extends CreateActivity {
     private ToggleButton vendor, ft;
     private boolean isVendor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create1);
+        setContentView(R.layout.activity_createVenOrFT);
         vendor = (ToggleButton) findViewById(R.id.vendor);
         ft = (ToggleButton) findViewById(R.id.ft);
         next = (Button) findViewById(R.id.next);
@@ -44,7 +42,7 @@ public class Create1 extends CreateActivity {
                         isVendor = false;
                     }
                 }
-                Log.i("Create1", "1 "+ isVendor);
+
 
             }
         });
@@ -68,7 +66,7 @@ public class Create1 extends CreateActivity {
                     }
 
                 }
-                Log.i("Create1", "2 "+ isVendor);
+
 
             }
         });
@@ -76,7 +74,7 @@ public class Create1 extends CreateActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Create1.this,Create2.class);
+                Intent intent = new Intent(CreateVenOrFT.this,CreateName.class);
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("isVendor", isVendor);
                 intent.putExtras(bundle);

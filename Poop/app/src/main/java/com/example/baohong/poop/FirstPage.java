@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class FirstPage extends AppCompatActivity {
     private Button FoodTruck, Vendor;
     private TextView Create;
     @Override
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Create1.class);
+                Intent intent = new Intent(FirstPage.this, CreateVenOrFT.class);
                 startActivity(intent);
             }
         });

@@ -15,30 +15,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Create4 extends CreateActivity {
-    private String gStreet,gCity,gState,gZip;
+public class CreateFTLocation extends CreateActivity{
+    private String gCity,gState,gZip;
     Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create4);
+        setContentView(R.layout.activity_createFTLocation);
         bundle = getIntent().getExtras();
         for (String key : bundle.keySet())
         {
             Log.d("Bundle Debug", key + " = \"" + bundle.get(key) + "\"");
         }
-        street = (EditText) findViewById(R.id.username);
-        city = (EditText) findViewById(R.id.password);
+        city = (EditText) findViewById(R.id.city);
         state = (EditText) findViewById(R.id.state);
         zip = (EditText) findViewById(R.id.zip);
         DoneCheck = (EditText) findViewById(R.id.zip);
         next = (Button) findViewById(R.id.next);
         next.setEnabled(false);
         next.setVisibility(View.GONE);
-        street.requestFocus();
+        city.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        street.addTextChangedListener(emptyCheck);
         city.addTextChangedListener(emptyCheck);
         state.addTextChangedListener(emptyCheck);
         zip.addTextChangedListener(emptyCheck);
@@ -51,8 +49,7 @@ public class Create4 extends CreateActivity {
     }
     public void sendToNext()
     {
-        Intent intent = new Intent(Create4.this,Create5.class);
-        bundle.putString("gStreet", gStreet);
+        Intent intent = new Intent(CreateFTLocation.this,CreateUserPass.class);
         bundle.putString("gCity", gCity);
         bundle.putString("gState", gState);
         bundle.putString("gZip", gZip);
@@ -82,19 +79,16 @@ public class Create4 extends CreateActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            gStreet = street.getText().toString();
             gCity = city.getText().toString();
             gState = state.getText().toString();
             gZip = zip.getText().toString();
-            if(TextUtils.isEmpty(gStreet))
-                street.setError("Please enter your street");
             if(TextUtils.isEmpty(gCity))
                 city.setError("Please enter your city");
             if(TextUtils.isEmpty(gState))
                 state.setError("Please enter your state");
             if(TextUtils.isEmpty(gZip))
                 zip.setError("Please enter your zip");
-            if(!TextUtils.isEmpty(gStreet) && !TextUtils.isEmpty(gCity) && !TextUtils.isEmpty(gState) && !TextUtils.isEmpty(gZip))
+            if(!TextUtils.isEmpty(gCity) && !TextUtils.isEmpty(gState) && !TextUtils.isEmpty(gZip))
             {
                 next.setVisibility(View.VISIBLE);
                 next.setEnabled(true);

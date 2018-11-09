@@ -9,73 +9,66 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.*;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Create3 extends CreateActivity {
-    private String gEmail,gPhone;
-    private boolean isVendor;
-    Bundle bundle;
-
+public class CreateName extends CreateActivity {
+    private String gfname, glname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create3);
-        bundle = getIntent().getExtras();
-        isVendor = bundle.getBoolean("isVendor");
-        for (String key : bundle.keySet())
-        {
-            Log.d("Bundle Debug", key + " = \"" + bundle.get(key) + "\"");
-        }
-        email = (EditText) findViewById(R.id.email);
-        phone = (EditText) findViewById(R.id.phone);
-        DoneCheck = (EditText) findViewById(R.id.phone);
-        email.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        setContentView(R.layout.activity_createName);
+
+        fname = (EditText) findViewById(R.id.fname);
+        lname = (EditText) findViewById(R.id.lname);
+        DoneCheck = (EditText) findViewById(R.id.lname);
         next = (Button) findViewById(R.id.next);
         next.setEnabled(false);
         next.setVisibility(View.GONE);
-        email.addTextChangedListener(emptyCheck);
-        phone.addTextChangedListener(emptyCheck);
+        fname.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        fname.addTextChangedListener(emptyCheck);
+        lname.addTextChangedListener(emptyCheck);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendToNext();
+
             }
         });
-    }
-    public void sendToNext()
-    {
-        Intent intent1 = new Intent(Create3.this,Create4.class);
-        Intent intent2 = new Intent(Create3.this,Create4v5.class);
-        bundle.putString("gEmail", gEmail);
-        bundle.putString("gPhone", gPhone);
-        if(isVendor) {
-            intent1.putExtras(bundle);
-            startActivity(intent1);
-        }
-        else {
-            intent2.putExtras(bundle);
-            startActivity(intent2);
-        }
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
 
-    @Override
+
+
+    }
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
+    public void sendToNext()
+    {
+        Intent intent = new Intent(CreateName.this,CreateContactInfo.class);
+        Bundle bundle = getIntent().getExtras();
+        for (String key : bundle.keySet())
+        {
+            Log.d("Bundle Debug", key + " = \"" + bundle.get(key) + "\"");
+        }
+        bundle.putString("fname", gfname);
+        bundle.putString("lname", glname);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
     private TextView.OnEditorActionListener flistener = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if(actionId == EditorInfo.IME_ACTION_DONE)
             {
                 sendToNext();
+
             }
             return false;
         }
@@ -88,13 +81,17 @@ public class Create3 extends CreateActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            gEmail = email.getText().toString();
-            gPhone = phone.getText().toString();
-            if(TextUtils.isEmpty(gEmail))
-                email.setError("Please enter your email");
-            if(TextUtils.isEmpty(gPhone))
-                phone.setError("Please enter your phone number");
-            if(!TextUtils.isEmpty(gEmail) && !TextUtils.isEmpty(gPhone))
+            gfname = fname.getText().toString();
+            glname = lname.getText().toString();
+            if(TextUtils.isEmpty(gfname))
+            {
+                fname.setError("Please enter your first name");
+            }
+            if(TextUtils.isEmpty(glname))
+            {
+                lname.setError("Please enter your last name");
+            }
+            if(!TextUtils.isEmpty(gfname) && !TextUtils.isEmpty(glname))
             {
                 next.setVisibility(View.VISIBLE);
                 next.setEnabled(true);
