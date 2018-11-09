@@ -20,8 +20,10 @@ public class Create5 extends CreateActivity {
         bundle = getIntent().getExtras();
         username = (EditText) findViewById(R.id.username);
         password = findViewById(R.id.password1);
+        confirm = findViewById(R.id.confirm1);
         username.addTextChangedListener(emptyCheck);
         password.addTextChangedListener(emptyCheck);
+        confirm.addTextChangedListener(emptyCheck);
         username.requestFocus();
 
     }
@@ -76,6 +78,14 @@ public class Create5 extends CreateActivity {
             else
             {
                 password.setError("Valid");
+            }
+            if(!confirm.getText().toString().equals(gPassword))
+            {
+                confirm.setError("Does not match");
+            }
+            else
+            {
+                confirm.setError("OK this is epic");
             }
         }
 
