@@ -36,6 +36,8 @@
     <string name="remember">Remember me?</string>
     <string name="FTImg">FTimg</string>
     <string name="description">Description</string>
+    <string name="search">Search...</string>
+    <string name="importIMG">Change profile image</string>
 
 
 </resources>

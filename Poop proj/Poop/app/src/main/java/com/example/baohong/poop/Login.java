@@ -37,7 +37,9 @@ public class Login extends AppCompatActivity {
     private TextView forgot, register;
     SharedPreferences sp;
     private boolean isVendor;
-    private String localhostip = "10.0.2.2";
+    //192.168.0.17 for real
+    //10.0.2.2 for emu
+    private String localhostip = "192.168.0.17";
     Bundle bundle;
 
     @Override
