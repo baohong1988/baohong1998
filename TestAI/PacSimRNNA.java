@@ -19,7 +19,7 @@ public class PacSimRNNA implements PacAction {
     private List<Point> food;
     private List<Integer> visited;
     private List<PointCost> init_pq;
-    private List<SolutionPath> sol;
+    private List<PointCostPathHolder> sol;
     private int simTime;
 
     public PacSimRNNA( String fname ) {
@@ -77,7 +77,11 @@ public class PacSimRNNA implements PacAction {
                 System.out.printf("%2d : (%d,%d)\n", i, (int) food.get(i).getX(), (int) food.get(i).getY() );
             }
             System.out.println();
-            //cost from starting pos to every food pallet
+
+
+
+
+            //cost from starting pos to every food pallet or init cost
             //init_pq is a list of custom class PointCost
             init_pq = new ArrayList<PointCost>();
             System.out.println("Population at step 1 :");
@@ -99,11 +103,15 @@ public class PacSimRNNA implements PacAction {
                 i++;
                 System.out.println("\n");
             }
+
+
+
             //Applying NNA to every vertex
-            sol = new ArrayList<>();
             for(int i=0; i<num_food; i++)
             {
-                sol.addAll(NNA(init_pq.get(i).getPosInCost(), cost))
+                PointCostPathHolder init_pch = new PointCostPathHolder(new List<Integer>().add(0).add(i+1),
+                        init_pq.get(i).getCost());
+                sol.addAll(NNA(cost, init_pch));
             }
 
 
@@ -131,8 +139,49 @@ public class PacSimRNNA implements PacAction {
                 ++simTime, pc.getLoc().x, pc.getLoc().y, face );
         return face;
     }
-    public List<SolutionPath> NNA(Point vertex, int[][] cost, )
+    public List<PointCostPathHolder> NNA(int[][] cost, PointCostPathHolder init_pch)
     {
+
+        List<PointCostPathHolder> pch = new ArrayList<>();
+        pch.add(init_pch);
+        int num_iteration = cost.length-1;
+        int i = 0;
+        while (i < num_iteration)
+        {
+            List<Integer> minVertices = new ArrayList<>();
+            PointCostPathHolder evaluating_path = pch.remove(0);
+            int vertex = evaluating_path.lastVertex();
+            int j=0;
+            while (j<cost.length)
+            {
+                if(!evaluating_path.isVisted(j))
+                {
+                    if(minVertices.isEmpty())
+                    {
+                        minVertices.add(j);
+                        continue;
+                    }
+                    int x = cost[vertex][j]; //cost at current path
+                    int y = cost[vertex][minVertices.get(0)]; //cost at the head of the queue
+                    //if current path has less cost than what at the head of the queue, enqueue new val and dequeue old one
+                    if(x < y){
+                        minVertices.add(j);
+                        minVertices.remove(0);
+                    }
+                    else if(x == y)
+                    {
+                        minVertices.add(j);
+                    }
+
+                }
+
+            }
+            for(int l=0; l<minVertices.size(); l++)
+            {
+                PointCostPathHolder = new ()
+            }
+        }
+
 
     }
 
@@ -145,6 +194,32 @@ class PointCostComparator implements Comparator<PointCost>{
         else if(p1.cost < p2.cost)
             return -1;
         return 0;
+    }
+}
+class PointCostPathHolder{
+    public List<Integer> cp;
+    public int total_cost;
+    public PointCostPathHolder(List<Integer> cp, int total_cost)
+    {
+        this.cp = cp;
+        this.total_cost = total_cost;
+    }
+
+    public List<Integer> getCp() {
+        return cp;
+    }
+    public int getTotal_cost()
+    {
+        return total_cost;
+    }
+    public boolean isVisted(int vertex)
+    {
+        if(this.cp.contains(vertex)) return true;
+        return false;
+    }
+    public int lastVertex()
+    {
+        return cp.get(cp.size()-1);
     }
 }
 
