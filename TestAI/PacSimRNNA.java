@@ -111,11 +111,12 @@ public class PacSimRNNA implements PacAction {
             {
                 List<Integer> initPath = new ArrayList<>();
                 initPath.add(0);
-                initPath.add(j+1);
+                initPath.add(init_pq.get(j).getVertex());
                 PointCostPathHolder init_pch = new PointCostPathHolder(initPath,
                         init_pq.get(j).getCost());
                 sol.addAll(NNA(cost, init_pch));
             }
+            Collections.sort(sol, new PointCostPathHolderComparator());
             for(int j=0; j<sol.size(); j++)
             {
                 System.out.print("Path "+ j +": " );
@@ -157,7 +158,7 @@ public class PacSimRNNA implements PacAction {
 
         List<PointCostPathHolder> pch = new ArrayList<>();
         pch.add(init_pch);
-        int num_vertices = cost.length-1;
+        int num_vertices = cost.length;
         while (pch.get(0).getSize() < num_vertices)
         {
             List<Integer> minVertices = new ArrayList<>();
@@ -171,6 +172,8 @@ public class PacSimRNNA implements PacAction {
                     if(minVertices.isEmpty())
                     {
                         minVertices.add(j);
+                        ++j;
+                        continue;
                     }
                     int x = cost[vertex][j]; //cost at current path
                     int y = cost[vertex][minVertices.get(0)]; //cost at the head of the queue
@@ -183,6 +186,7 @@ public class PacSimRNNA implements PacAction {
                     {
                         minVertices.add(j);
                     }
+                    j++;
 
                 }
                 else
@@ -191,19 +195,37 @@ public class PacSimRNNA implements PacAction {
             }
             for(int l=0; l<minVertices.size(); l++)
             {
-                List<Integer> cp = evaluating_path.getCp();
+                //System.out.print("Min "+ minVertices.get(l) + "\n");
+
+                List<Integer> cp = new ArrayList<>();
+                cp.addAll(evaluating_path.getCp());
+//                for(int i : cp)
+//                    System.out.print(i+" ");
+                //System.out.println();
                 int splitVer = minVertices.get(l);
                 int totalCost = evaluating_path.getTotal_cost() + cost[vertex][splitVer];
                 cp.add(splitVer);
                 PointCostPathHolder newPath = new PointCostPathHolder(cp, totalCost);
+                newPath.printCp();
                 pch.add(newPath);
             }
+
         }
         return pch;
 
 
     }
 
+}
+class PointCostPathHolderComparator implements Comparator<PointCostPathHolder>{
+    public int compare(PointCostPathHolder pch1, PointCostPathHolder pch2)
+    {
+        if(pch1.total_cost > pch2.total_cost)
+            return 1;
+        else if(pch1.total_cost < pch2.total_cost)
+            return -1;
+        return 0;
+    }
 }
 class PointCostComparator implements Comparator<PointCost>{
     public int compare(PointCost p1, PointCost p2)
@@ -221,7 +243,8 @@ class PointCostPathHolder{
     public int size;
     public PointCostPathHolder(List<Integer> cp, int total_cost)
     {
-        this.cp = cp;
+        this.cp = new ArrayList<>();
+        this.cp.addAll(cp);
         this.total_cost = total_cost;
         this.size = cp.size();
     }
@@ -247,6 +270,7 @@ class PointCostPathHolder{
         {
             System.out.print(cp.get(i)+" ");
         }
+        System.out.print("Cost : " + this.total_cost);
         System.out.println();
     }
     public int lastVertex()
