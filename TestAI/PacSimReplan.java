@@ -52,7 +52,7 @@ public class PacSimReplan implements PacAction {
       if( path.isEmpty() ) {
          Point tgt = PacUtils.nearestFood( pc.getLoc(), grid);
          path = BFSPath.getPath(grid, pc.getLoc(), tgt);
-  .
+
          System.out.println("Pac-Man currently at: [ " + pc.getLoc().x
                + ", " + pc.getLoc().y + " ]");
          System.out.println("Setting new target  : [ " + tgt.x

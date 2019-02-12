@@ -10,8 +10,11 @@ import pacsim.PacUtils;
 import pacsim.PacmanCell;
 
 /**
- * Simple Re-planning Search Agent
- * @author Dr. Demetrios Glinos
+ * Repetitive Nearest Neighbor Algorithm Agent
+ * University of Central Florida
+ * CAP 4600 - Spring 2019
+ * Authors: Bao Hong, Davis Rollman
+ *
  */
 public class PacSimRNNA implements PacAction {
 
@@ -31,7 +34,7 @@ public class PacSimRNNA implements PacAction {
     }
 
     public static void main( String[] args ) {
-        System.out.println("\nTSP using Repetitive Nearest Neighbor agent by Bao Hong:");
+        System.out.println("\nTSP using Repetitive Nearest Neighbor agent by Bao Hong and Davis Rollman:");
         System.out.println("\nMaze : " + args[ 0 ] + "\n" );
         new PacSimRNNA( args[ 0 ] );
     }
@@ -40,7 +43,7 @@ public class PacSimRNNA implements PacAction {
     public void init() {
         simTime = 0;
         foodEaten = 0;
-        path = new ArrayList();
+        path = new ArrayList<Point>();
     }
 
     @Override
@@ -132,7 +135,7 @@ public class PacSimRNNA implements PacAction {
             PointCost pointcost = new PointCost(food.get(i), i+1, cost[0][i+1]);
             init_pq.add(pointcost);
         }
-        unsorted_init_pq = new ArrayList();
+        unsorted_init_pq = new ArrayList<PointCost>();
         unsorted_init_pq.addAll(init_pq);
         Collections.sort(init_pq, new PointCostComparator());
         Iterator itr = init_pq.iterator();
