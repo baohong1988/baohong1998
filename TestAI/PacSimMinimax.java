@@ -38,7 +38,7 @@ public class PacSimMinimax implements PacAction {
         new PacSimMinimax( depth, fname, te, gr, ml);
 
         System.out.println("\nAdversarial Search using Minimax by Bao Hong and Davis Rollman:");
-        System.out.println("\n  Game board : " + fname);
+        System.out.println("\n    Game board : " + fname);
 
         System.out.println("    Search depth : " + depth +"\n");
 
@@ -64,5 +64,38 @@ public class PacSimMinimax implements PacAction {
 
 
         return newFace;
+    }
+    public PacCell[][] minimax(int depth, int maxDepth, BoardPosition root)
+    {
+        if(depth < maxDepth)
+
+    }
+    public List<PacCell[][]> getAllmoves(PacCell[][] grid)
+    {
+        List<PacCell[][]> allmoves = new ArrayList<>();
+
+
+
+
+    }
+}
+class BoardPosition
+{
+    PacCell[][] state;
+    int eval;
+    List<BoardPosition> next;
+    public BoardPosition(PacCell[][] state, int eval)
+    {
+        this.state = state;
+        this.eval = eval;
+        next = new ArrayList<>();
+    }
+    public PacCell[][] getState()
+    {
+        return state;
+    }
+    public int getEval()
+    {
+        return eval;
     }
 }
