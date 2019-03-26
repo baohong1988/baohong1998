@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Blob from './Big lobby';
 import './App.css';
 import io from 'socket.io-client'
-import { USER_CONNECTED, LOGOUT } from './Event'
+import { USER_CONNECTED, LOGOUT, CREATE_ROOM } from './Event'
 const socketURL = "http://192.168.0.10:3231"
 
 class App extends Component {
@@ -18,7 +18,8 @@ class App extends Component {
             isShow: false,
             isCreated: false,
             socket : null,
-            user : null
+            user : null,
+            room : null
         }
         
     }
@@ -30,10 +31,18 @@ class App extends Component {
     })
     this.setState({socket})
   }
-  setUser = (user)=>{
+  setUser = (user, room)=>{
     const { socket } = this.state
-    socket.emit(USER_CONNECTED, user);
+    socket.emit(USER_CONNECTED, user, room);
     this.setState({ user })
+    this.setState({ room})
+  }
+  setRoom = (room, hostname)=>{
+    const { socket } = this.state
+    socket.emit(CREATE_ROOM, room, hostname);
+    this.setState({ room })
+    
+   
   }
   logout = () =>{
     let { socket } = this.state.socket
@@ -59,12 +68,14 @@ class App extends Component {
       this.setState({isHost : true});
      
     }
+    //console.log(this.state.isHost)
     
     if(this.state.isCreated)
     {
+      
       return (
-        
-           <Blob socket={this.state.socket} />
+
+           <Blob socket={this.state.socket} room={this.state.room}/>
          
        
       )
@@ -83,7 +94,9 @@ class App extends Component {
         
           </Container>
           <StartModal ishost={this.state.isHost.toString()} show={this.state.isShow}
-                      onHide={closeRegModal} setcreated={this.setCreated} socket={socket} setUser={this.setUser}/>
+                      onHide={closeRegModal} setcreated={this.setCreated} socket={socket} 
+                      setUser={this.setUser}
+                      setRoom={this.setRoom}/>
         
         
         

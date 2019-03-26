@@ -28,10 +28,13 @@ class Blob extends Component
             
         }
         const {socket} = this.props
-      
-        socket.emit(GET_LIST, this.setList)
-        const userList = Object.keys(this.state.userList)
-        //console.log(userList)
+        const room = this.props.room
+        console.log("room :" + room)
+        socket.emit(GET_LIST, room,this.setList)
+        let userList = []
+ 
+        userList = Object.keys(this.state.userList)
+        //console.log(this.state.userList)
         // var i = 0
         // for(user in this.state.userList)
         // {
