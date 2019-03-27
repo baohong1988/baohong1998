@@ -12,7 +12,10 @@ class StartModal extends Component
             roomname: "",
             username: "",
             hostname:"",
-            error: ""
+            error: "",
+            roomTaken: false,
+            userTaken: false,
+            roomExist: false
             
         }
     }
@@ -22,10 +25,12 @@ class StartModal extends Component
         if(!isRoom)
         {    
             this.setError("Room doesn't exist")
+            this.setState({roomExist:true})
             return
         }
         if(isUser && isRoom){
             this.setError("User name taken")
+            this.setState({userTaken:true})
             
         
         }else{
@@ -39,7 +44,7 @@ class StartModal extends Component
         // console.log(hostname)
         if(isRoom){
             this.setError("Room name taken")
-            
+            this.setState({roomTaken:true})
         
         }else{
             this.props.setRoom(room, hostname)
@@ -85,20 +90,31 @@ class StartModal extends Component
     handleOnChange1 = (e) =>{
        
         this.setState({hostname:e.target.value})
+        this.setRoomTaken()
         
     }
     handleOnChange2 = (e) =>{
-        this.setState({roomname:e.target.value})
-        
+        this.setState({username:e.target.value})
+        this.setUserTaken()
     }
     handleOnChange3 = (e) =>{
-        this.setState({username:e.target.value})
-        
+        this.setState({roomname:e.target.value})
+        this.setRoomExist()
+    }
+   
+    setRoomTaken=()=>{
+        this.setState({roomTaken:false})
+    }
+    setUserTaken=()=>{
+        this.setState({userTaken:false})
+    }
+    setRoomExist=()=>{
+        this.setState({roomExist:false, userTaken:false})
     }
     
     render()
     {
-        let { username,error,roomname,hostname } = this.state
+        let { username,error,roomname,hostname,roomTaken,userTaken,roomExist } = this.state
      
         switch(this.props.ishost)
         {
@@ -122,7 +138,7 @@ class StartModal extends Component
                                     onChange={this.handleOnChange1}
                                     placeholder="Create room name" />
                             </Form.Group>
-                            <Alert variant='danger'>{error ? error : null}</Alert>
+                            <Alert variant='danger' show={roomTaken} onClose={this.setRoomTaken}>{error}</Alert>
                             <Form.Group controlId="creatNumPlayers">
                                 <Form.Label>Number of players</Form.Label>
                                 <Form.Control 
@@ -167,20 +183,20 @@ class StartModal extends Component
                                     ref={(input) => {this.textInput = input}} 
                                     type="text"
                                     value={username} 
-                                    onChange={this.handleOnChange3} 
+                                    onChange={this.handleOnChange2} 
                                     placeholder="Enter a name" />
                             </Form.Group>
-                            <Alert variant='danger'>{error ? error : null}</Alert>
+                            <Alert variant='danger' show={userTaken} onClose={this.setUserTaken}>{error}</Alert>
                             <Form.Group controlId="findRoom">
                                 <Form.Label>Host name</Form.Label>
                                 <Form.Control
                                     ref={(input) => {this.textInput = input}} 
                                     type="text"
                                     value={roomname} 
-                                    onChange={this.handleOnChange2} 
+                                    onChange={this.handleOnChange3} 
                                     placeholder="Enter host name" />
                             </Form.Group>
-                            <Alert variant='danger'>{error ? error : null}</Alert>
+                            <Alert variant='danger' show={roomExist} onClose={this.setRoomExist} >{error}</Alert>
                             <Form.Group controlId="createPass">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control 

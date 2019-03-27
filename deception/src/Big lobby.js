@@ -10,7 +10,8 @@ class Blob extends Component
     {
         super()
         this.state = 
-            { back : false,
+            { 
+              back : false,
               userList : []
             }
     }
@@ -23,11 +24,12 @@ class Blob extends Component
         
 
         if(this.state.back) return(<App />)
+        const {socket} = this.props
         let goBack = () => {
             this.setState({ back : true})
             
         }
-        const {socket} = this.props
+        
         const room = this.props.room
         console.log("room :" + room)
         socket.emit(GET_LIST, room,this.setList)
