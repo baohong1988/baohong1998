@@ -37,10 +37,10 @@ class App extends Component {
     this.setState({ user })
     this.setState({ room})
   }
-  setRoom = (room, hostname)=>{
+  setRoom = (room, host)=>{
     const { socket } = this.state
-    socket.emit(CREATE_ROOM, room, hostname);
-    this.setState({ room })
+    socket.emit(CREATE_ROOM, room, host);
+    this.setState({ room :room, user: host })
     
    
   }
@@ -55,6 +55,7 @@ class App extends Component {
   setCreated = () => {
     this.setState({ isShow : false, isCreated : true})
   }
+  
   render() {
     //console.log(this.state.isCreated)
     const { socket } = this.state
@@ -74,8 +75,8 @@ class App extends Component {
     {
       
       return (
-
-           <Blob socket={this.state.socket} room={this.state.room}/>
+            
+           <Blob isHost={this.state.isHost} socket={this.state.socket} room={this.state.room} user={this.state.user} />
          
        
       )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import App from './App'
 import './Biglobby.css'
-import {GET_LIST} from './Event'
+import {GET_LIST, LOGOUT} from './Event'
 
 class Blob extends Component
 {
@@ -12,37 +12,64 @@ class Blob extends Component
         this.state = 
             { 
               back : false,
-              userList : []
+              userList : [],
+              startLabel: "",
+              isReady : false,
+            
             }
+       
+    }
+    componentDidMount(){
+        this.setReady()
     }
     setList = ({userList})=>{
         this.setState({ userList })
     }
-   
+    leave = () =>{
+        const {socket, user,room} = this.props
+        socket.emit(LOGOUT, user, room)
+        this.setState({ back : true})
+    }
+    setStartLabel = (label)=>{
+        this.setState({startLabel : label})
+    }
+    setReady = ()=>{
+        const {isHost} = this.props
+        const {isReady} = this.state
+        const name = this.props.user.name
+
+        console.log(document.getElementById(name))
+        if(isHost)
+            this.setStartLabel("Start")
+        else if(isReady)
+        {
+            this.setStartLabel("Unready")
+            this.setState({isReady: false})
+            
+            
+        }
+        else
+        {
+            this.setStartLabel("Ready")
+            this.setState({isReady: true})
+        }
+    }
     render()
     {
         
 
         if(this.state.back) return(<App />)
-        const {socket} = this.props
-        let goBack = () => {
-            this.setState({ back : true})
-            
-        }
-        
+        const {socket, isHost} = this.props
+       
         const room = this.props.room
-        console.log("room :" + room)
+        
+       
+       
         socket.emit(GET_LIST, room,this.setList)
+
         let userList = []
- 
         userList = Object.keys(this.state.userList)
-        //console.log(this.state.userList)
-        // var i = 0
-        // for(user in this.state.userList)
-        // {
-        //     i++;
-        //     players1.push(<Col key={i} md={4}>{user}</Col>)
-        // }
+      
         var i = 0;
         return(
         
@@ -52,14 +79,16 @@ class Blob extends Component
             <p>New Lobby</p>
             <Container >
             <Row>
-                <Col ><Button variant='primary' size='lg' onClick={goBack}>Leave</Button></Col>
-
+                <Col></Col>
+                <Col ><Button variant='primary' size='lg' onClick={this.leave}>Leave</Button></Col>
+                <Col ><Button variant='primary' size='lg' onClick={this.setReady}>{this.state.startLabel}</Button></Col>
+                <Col></Col>           
             </Row>
             
             </Container>
             <div >
                 <Container className='players'>
-                    <Row>
+                    <Row  >
                         {userList.map(user => <Col key={i++} md={4}>{user}</Col>)}
                     </Row>
                 </Container>

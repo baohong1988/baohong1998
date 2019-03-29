@@ -13,6 +13,7 @@ class StartModal extends Component
             username: "",
             hostname:"",
             error: "",
+            invalid: false,
             roomTaken: false,
             userTaken: false,
             roomExist: false
@@ -28,6 +29,12 @@ class StartModal extends Component
             this.setState({roomExist:true})
             return
         }
+        if(this.state.username === "")
+        {    
+            this.setError("Please enter a name")
+            this.setState({userTaken: true})
+            return
+        }
         if(isUser && isRoom){
             this.setError("User name taken")
             this.setState({userTaken:true})
@@ -38,19 +45,27 @@ class StartModal extends Component
             this.setState({error : ""})
             this.props.setcreated()
         }
+        
     }
-    setRoom = ({room, isRoom})=>{
-        const {hostname} = this.state
+    setRoom = ({room, host, isRoom})=>{
+       
         // console.log(hostname)
         if(isRoom){
             this.setError("Room name taken")
             this.setState({roomTaken:true})
         
-        }else{
-            this.props.setRoom(room, hostname)
+        }
+        else if(room == "")
+        {
+            this.setError("Please enter a name")
+            this.setState({roomTaken: true})
+        }    
+        else{
+            this.props.setRoom(room, host)
             this.setState({error : ""})
             this.props.setcreated()
         }
+        
     }
     setError = (error)=>{
         this.setState({error})
@@ -59,15 +74,11 @@ class StartModal extends Component
     {
         //console.log(this.state.username)
         const { socket } = this.props
-        let { username } = this.state
-        let { roomname } = this.state
         let { hostname } = this.state
-            console.log(roomname)
-            socket.emit(VERIFY_ROOM, hostname, this.setRoom)
-            
+        hostname = hostname.trim()
 
+        socket.emit(VERIFY_ROOM, hostname, this.setRoom)
             
-        
           
         // this.isProceed(this.state.error)
         // console.log(this.state.error)
@@ -77,8 +88,10 @@ class StartModal extends Component
         const { socket } = this.props
         let { username } = this.state
         let { roomname } = this.state
-        let { hostname } = this.state
-        console.log(roomname)
+       
+        username = username.trim()
+        roomname = roomname.trim()
+
         socket.emit(VERIFY_USER, username, roomname, this.setUser)
     }
    
@@ -111,11 +124,14 @@ class StartModal extends Component
     setRoomExist=()=>{
         this.setState({roomExist:false, userTaken:false})
     }
-    
+    onHide = ()=>{
+        this.setState({roomExist:false, userTaken:false, roomTaken: false})
+        this.props.onHide()
+    }
     render()
     {
         let { username,error,roomname,hostname,roomTaken,userTaken,roomExist } = this.state
-     
+        //console.log(this.textInput)
         switch(this.props.ishost)
         {
             
@@ -156,7 +172,7 @@ class StartModal extends Component
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.props.onHide}>
+                        <Button variant="secondary" onClick={this.onHide}>
                             Close
                         </Button>
                         <Button variant="primary" onClick={this.handleOnSubmit}>
@@ -207,7 +223,7 @@ class StartModal extends Component
                     </Modal.Body>
     
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.props.onHide}>
+                        <Button variant="secondary" onClick={this.onHide}>
                             Close
                         </Button>
                         <Button variant="primary" onClick={this.handleOnSubmit2}>

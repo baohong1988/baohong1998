@@ -25,16 +25,16 @@ module.exports = function(socket){
     socket.on(VERIFY_ROOM, (roomname, callback)=>{
         
         if(isRoom(roomname, connectedRoom)){
-            callback({isRoom : true, room : null})
+            callback({isRoom : true, room : null, host : null})
         }
         else{
-            callback({isRoom:false, room: roomname})
+            callback({isRoom:false, room: roomname, host : createUser({name:roomname})})
             
         }
     })
-    socket.on(CREATE_ROOM, (room, hostname)=>{
+    socket.on(CREATE_ROOM, (room, host)=>{
         //console.log(room)
-        connectedRoom = addRoom(connectedRoom, room, hostname)
+        connectedRoom = addRoom(connectedRoom, room, host)
         socket.join(room)
         //console.log(connectedRoom)
        
@@ -50,18 +50,31 @@ module.exports = function(socket){
     socket.on(GET_LIST, (room, callback)=>{
         callback({userList : getlist(room)})
     })
+    socket.on(LOGOUT, (user, room)=>{
+        socket.leave(room)
+        connectedRoom[room] = removeUser(connectedRoom[room], user.name)
+     
+        const len = Object.keys(connectedRoom[room]).length
+        console.log(len)
+        if(len === 0)
+        {
+            console.log(connectedRoom)
+            connectedRoom = removeRoom(connectedRoom, room)
+            console.log(connectedRoom)
+        }
+    })
 }
 
 function getlist(room){
     console.log(connectedRoom)
     return connectedRoom[room]
 }
-function addRoom(roomList, room, hostname)
+function addRoom(roomList, room, host)
 {
     
     let newList = Object.assign({}, roomList)
     newList[room] = {}
-    newList[room] = addUser(newList[room], createUser({name:hostname}))
+    newList[room] = addUser(newList[room], host)
     return newList
 }
 function removeRoom(roomList,room)
