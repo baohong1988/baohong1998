@@ -12,6 +12,7 @@ class Blob extends Component
         this.state = 
             { 
               back : false,
+              user: null,
               userList : [],
               startLabel: "",
               isReady : false,
@@ -21,6 +22,7 @@ class Blob extends Component
     }
     componentDidMount(){
         this.setReady()
+        this.setState({user : this.props.user})
     }
     setList = ({userList})=>{
         this.setState({ userList })
@@ -36,16 +38,16 @@ class Blob extends Component
     setReady = ()=>{
         const {isHost} = this.props
         const {isReady} = this.state
-        const name = this.props.user.name
+        let {user} = this.state
 
-        console.log(document.getElementById(name))
         if(isHost)
             this.setStartLabel("Start")
         else if(isReady)
         {
             this.setStartLabel("Unready")
             this.setState({isReady: false})
-            
+            user.readyColor = "#6cff47"
+            console.log(user.readyColor)
             
         }
         else
@@ -89,7 +91,7 @@ class Blob extends Component
             <div >
                 <Container className='players'>
                     <Row  >
-                        {userList.map(user => <Col key={i++} md={4}>{user}</Col>)}
+                        {userList.map(user => <Col  key={i++} md={4}>{user}</Col>)}
                     </Row>
                 </Container>
             </div>

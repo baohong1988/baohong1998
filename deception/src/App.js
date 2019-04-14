@@ -7,7 +7,8 @@ import Blob from './Big lobby';
 import './App.css';
 import io from 'socket.io-client'
 import { USER_CONNECTED, LOGOUT, CREATE_ROOM } from './Event'
-const socketURL = "http://192.168.0.10:3231"
+//const socketURL = "http://192.168.0.10:3330" //home local
+const socketURL = "http://localhost:3231" //ucf nat
 
 class App extends Component {
   constructor()

@@ -55,7 +55,7 @@ class StartModal extends Component
             this.setState({roomTaken:true})
         
         }
-        else if(room == "")
+        else if(room === "")
         {
             this.setError("Please enter a name")
             this.setState({roomTaken: true})
