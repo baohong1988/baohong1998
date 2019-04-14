@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="PacSimRNNA">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PacSimRNNA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/PacSimRNNA.jar!/" />
+    </SOURCES>
+  </library>
+</component>

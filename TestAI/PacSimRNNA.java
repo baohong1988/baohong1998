@@ -77,7 +77,6 @@ public class PacSimRNNA implements PacAction {
             Point tgt = finalSolution.get(foodEaten++);
             path = BFSPath.getPath(grid, pc.getLoc(), tgt);
 
-
 //            System.out.println("Pac-Man currently at: [ " + pc.getLoc().x
 //                    + ", " + pc.getLoc().y + " ]");
 //            System.out.println("Setting new target  : [ " + tgt.x
