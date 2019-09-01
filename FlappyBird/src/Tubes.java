@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Tubes {
     public int x,y1,y2,ygap1, ygap2;
-    private final static int tWidth = 60, tHeight1 = 500, tHeight2 = 700, gapWidth = 60, gapHeight = 150;
+    public int tWidth = 60, tHeight1 = 500, tHeight2 = 700, gapWidth = 60, gapHeight = 150;
 //    ArrayList<Rectangle> gap = new ArrayList<>();
     private Rectangle g, t1, t2;
     private boolean visited;

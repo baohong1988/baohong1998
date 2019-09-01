@@ -62,8 +62,10 @@ public class FlappyBird implements ActionListener, KeyListener
             panel.displayInstruction(started);
             bird.physic();
             //tubes interactions
-            for (Tubes t: tubes)
+
+            for (Iterator<Tubes> iterator = tubes.iterator(); iterator.hasNext();)
             {
+                Tubes t = iterator.next();
                 t.moving();
 
                 //score
@@ -78,6 +80,8 @@ public class FlappyBird implements ActionListener, KeyListener
                     paused = true;
                     gameOver = true;
                 }
+                if(t.x <= 0-t.tWidth)
+                    iterator.remove();
             }
 
             //fall below the screen == lose
@@ -91,6 +95,7 @@ public class FlappyBird implements ActionListener, KeyListener
             {
 
                 tubes.add(new Tubes());
+		        //tubes.remove(0);
             }
             System.out.println(score);
 
